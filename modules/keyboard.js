@@ -403,12 +403,10 @@ function handleEnter(range, context) {
     }
     return lineFormats;
   }, {});
-  this.quill.blur();
   this.quill.insertText(range.index, '\n', lineFormats, Quill.sources.USER);
-  this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
+  this.quill.setSelection(range.index + 2, Quill.sources.SILENT);
   // Earlier scroll.deleteAt might have messed up our selection,
   // so insertText's built in selection preservation is not reliable
-  this.quill.focus();
   Object.keys(context.format).forEach((name) => {
     if (lineFormats[name] != null) return;
     if (Array.isArray(context.format[name])) return;
