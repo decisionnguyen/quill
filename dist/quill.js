@@ -5023,7 +5023,7 @@ function handleEnter(range, context) {
     }
     return lineFormats;
   }, {});
-  this.quill.insertText(range.index, '\n', lineFormats, _quill2.default.sources.USER);
+  this.quill.insertText(range.index, '\n ', lineFormats, _quill2.default.sources.USER);
   this.quill.setSelection(range.index + 2, _quill2.default.sources.SILENT);
   // Earlier scroll.deleteAt might have messed up our selection,
   // so insertText's built in selection preservation is not reliable
