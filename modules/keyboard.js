@@ -88,7 +88,7 @@ class Keyboard extends Module {
       let suffixText = leafEnd instanceof Parchment.Text ? leafEnd.value().slice(offsetEnd) : '';
       let curContext = {
         collapsed: range.length === 0,
-        empty: range.length === 0 && line.length() <= 1,
+        empty: range.length === 0,
         format: this.quill.getFormat(range),
         offset: offset,
         prefix: prefixText,
