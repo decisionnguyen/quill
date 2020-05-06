@@ -4654,14 +4654,12 @@ var Keyboard = function (_Module) {
       var _this2 = this;
 
       this.quill.root.addEventListener('keydown', function (evt) {
-        if (evt.defaultPrevented) {
-          evt.preventDefault();
-        }
+        if (evt.defaultPrevented) return;
         var which = evt.which || evt.keyCode;
         var bindings = (_this2.bindings[which] || []).filter(function (binding) {
           return Keyboard.match(evt, binding);
         });
-        if (bindings.length === 0) return;
+        // if (bindings.length === 0) return;
         var range = _this2.quill.getSelection();
         if (range == null || !_this2.quill.hasFocus()) return;
 

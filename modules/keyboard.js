@@ -73,14 +73,12 @@ class Keyboard extends Module {
 
   listen() {
     this.quill.root.addEventListener('keydown', (evt) => {
-      if (evt.defaultPrevented) {
-        evt.preventDefault()
-      }
+      if (evt.defaultPrevented) return;
       let which = evt.which || evt.keyCode;
       let bindings = (this.bindings[which] || []).filter(function(binding) {
         return Keyboard.match(evt, binding);
       });
-      if (bindings.length === 0) return;
+      // if (bindings.length === 0) return;
       let range = this.quill.getSelection();
       if (range == null || !this.quill.hasFocus()) return;
       let [line, offset] = this.quill.getLine(range.index);
