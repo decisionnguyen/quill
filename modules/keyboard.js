@@ -394,25 +394,25 @@ function handleDeleteRange(range) {
 }
 
 function handleEnter(range, context) {
-  if (range.length > 0) {
-    this.quill.scroll.deleteAt(range.index, range.length);  // So we do not trigger text-change
-  }
-  let lineFormats = Object.keys(context.format).reduce(function(lineFormats, format) {
-    if (Parchment.query(format, Parchment.Scope.BLOCK) && !Array.isArray(context.format[format])) {
-      lineFormats[format] = context.format[format];
-    }
-    return lineFormats;
-  }, {});
-  this.quill.insertText(range.index, '\n ', lineFormats, Quill.sources.USER);
-  this.quill.setSelection(range.index + 2, Quill.sources.SILENT);
-  // Earlier scroll.deleteAt might have messed up our selection,
-  // so insertText's built in selection preservation is not reliable
-  Object.keys(context.format).forEach((name) => {
-    if (lineFormats[name] != null) return;
-    if (Array.isArray(context.format[name])) return;
-    if (name === 'link') return;
-    this.quill.format(name, context.format[name], Quill.sources.USER);
-  });
+  // if (range.length > 0) {
+  //   this.quill.scroll.deleteAt(range.index, range.length);  // So we do not trigger text-change
+  // }
+  // let lineFormats = Object.keys(context.format).reduce(function(lineFormats, format) {
+  //   if (Parchment.query(format, Parchment.Scope.BLOCK) && !Array.isArray(context.format[format])) {
+  //     lineFormats[format] = context.format[format];
+  //   }
+  //   return lineFormats;
+  // }, {});
+  // this.quill.insertText(range.index, '\n ', lineFormats, Quill.sources.USER);
+  // this.quill.setSelection(range.index + 2, Quill.sources.SILENT);
+  // // Earlier scroll.deleteAt might have messed up our selection,
+  // // so insertText's built in selection preservation is not reliable
+  // Object.keys(context.format).forEach((name) => {
+  //   if (lineFormats[name] != null) return;
+  //   if (Array.isArray(context.format[name])) return;
+  //   if (name === 'link') return;
+  //   this.quill.format(name, context.format[name], Quill.sources.USER);
+  // });
   return true
 }
 
