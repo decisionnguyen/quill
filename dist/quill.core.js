@@ -4713,9 +4713,9 @@ var Keyboard = function (_Module) {
           if (binding.suffix != null && !binding.suffix.test(curContext.suffix)) return false;
           return binding.handler.call(_this2, range, curContext) !== true;
         });
-        // if (prevented) {
-        //   evt.preventDefault();
-        // }
+        if (prevented) {
+          evt.preventDefault();
+        }
       });
     }
   }]);
