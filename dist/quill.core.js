@@ -4659,7 +4659,7 @@ var Keyboard = function (_Module) {
         var bindings = (_this2.bindings[which] || []).filter(function (binding) {
           return Keyboard.match(evt, binding);
         });
-        // if (bindings.length === 0) return;
+        if (bindings.length === 0) return;
         var range = _this2.quill.getSelection();
         if (range == null || !_this2.quill.hasFocus()) return;
 
@@ -4713,7 +4713,7 @@ var Keyboard = function (_Module) {
           if (binding.suffix != null && !binding.suffix.test(curContext.suffix)) return false;
           return binding.handler.call(_this2, range, curContext) !== true;
         });
-        if (prevented && which !== 13) {
+        if (prevented) {
           evt.preventDefault();
         }
       });
@@ -5023,10 +5023,11 @@ function handleEnter(range, context) {
     }
     return lineFormats;
   }, {});
-  // this.quill.insertText(range.index, '\n', lineFormats, Quill.sources.USER);
-  // this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
+  this.quill.insertText(range.index, '\n', lineFormats, _quill2.default.sources.USER);
+  this.quill.setSelection(range.index + 1, _quill2.default.sources.SILENT);
   // Earlier scroll.deleteAt might have messed up our selection,
   // so insertText's built in selection preservation is not reliable
+  this.quill.focus();
   Object.keys(context.format).forEach(function (name) {
     if (lineFormats[name] != null) return;
     if (Array.isArray(context.format[name])) return;
