@@ -119,9 +119,9 @@ class Keyboard extends Module {
         if (binding.suffix != null && !binding.suffix.test(curContext.suffix)) return false;
         return binding.handler.call(this, range, curContext) !== true;
       });
-      if (prevented) {
-        evt.preventDefault();
-      }
+      // if (prevented) {
+      //   evt.preventDefault();
+      // }
     });
   }
 }
