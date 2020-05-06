@@ -4654,7 +4654,7 @@ var Keyboard = function (_Module) {
       var _this2 = this;
 
       this.quill.root.addEventListener('keydown', function (evt) {
-        return;
+        if (evt.defaultPrevented && evt.keyCode === 13) return;
         var which = evt.which || evt.keyCode;
         var bindings = (_this2.bindings[which] || []).filter(function (binding) {
           return Keyboard.match(evt, binding);
@@ -5027,7 +5027,6 @@ function handleEnter(range, context) {
   // this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
   // Earlier scroll.deleteAt might have messed up our selection,
   // so insertText's built in selection preservation is not reliable
-  this.quill.focus();
   Object.keys(context.format).forEach(function (name) {
     if (lineFormats[name] != null) return;
     if (Array.isArray(context.format[name])) return;
