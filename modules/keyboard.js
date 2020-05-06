@@ -73,7 +73,7 @@ class Keyboard extends Module {
 
   listen() {
     this.quill.root.addEventListener('keydown', (evt) => {
-      if (evt.defaultPrevented) return;
+      return;
       let which = evt.which || evt.keyCode;
       let bindings = (this.bindings[which] || []).filter(function(binding) {
         return Keyboard.match(evt, binding);
@@ -88,7 +88,7 @@ class Keyboard extends Module {
       let suffixText = leafEnd instanceof Parchment.Text ? leafEnd.value().slice(offsetEnd) : '';
       let curContext = {
         collapsed: range.length === 0,
-        empty: range.length === 0,
+        empty: range.length === 0 && line.length() <= 1,
         format: this.quill.getFormat(range),
         offset: offset,
         prefix: prefixText,

@@ -4654,7 +4654,7 @@ var Keyboard = function (_Module) {
       var _this2 = this;
 
       this.quill.root.addEventListener('keydown', function (evt) {
-        if (evt.defaultPrevented) return;
+        return;
         var which = evt.which || evt.keyCode;
         var bindings = (_this2.bindings[which] || []).filter(function (binding) {
           return Keyboard.match(evt, binding);
@@ -4682,7 +4682,7 @@ var Keyboard = function (_Module) {
         var suffixText = leafEnd instanceof _parchment2.default.Text ? leafEnd.value().slice(offsetEnd) : '';
         var curContext = {
           collapsed: range.length === 0,
-          empty: range.length === 0,
+          empty: range.length === 0 && line.length() <= 1,
           format: _this2.quill.getFormat(range),
           offset: offset,
           prefix: prefixText,
