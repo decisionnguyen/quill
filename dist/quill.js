@@ -5024,7 +5024,7 @@ function handleEnter(range, context) {
     return lineFormats;
   }, {});
   this.quill.blur();
-  this.quill.insertEmbed(range.index, '\n', lineFormats, _quill2.default.sources.USER);
+  this.quill.insertText(range.index, '\n', lineFormats, _quill2.default.sources.USER);
   this.quill.setSelection(range.index + 1, _quill2.default.sources.SILENT);
   // Earlier scroll.deleteAt might have messed up our selection,
   // so insertText's built in selection preservation is not reliable
@@ -5035,6 +5035,7 @@ function handleEnter(range, context) {
     if (name === 'link') return;
     _this3.quill.format(name, context.format[name], _quill2.default.sources.USER);
   });
+  return true;
 }
 
 function makeCodeBlockHandler(indent) {
