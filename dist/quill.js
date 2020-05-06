@@ -5026,9 +5026,9 @@ function handleEnter(range, context) {
   this.quill.insertText(range.index, '\n', lineFormats, _quill2.default.sources.USER);
   this.quill.setSelection(range.index + 1, _quill2.default.sources.SILENT);
   this.quill.insertText(range.index, ' ', lineFormats, _quill2.default.sources.USER);
+  this.quill.setSelection(range.index + 2, _quill2.default.sources.SILENT);
+  this.quill.deleteAt(range.index + 1, 1);
   this.quill.setSelection(range.index + 1, _quill2.default.sources.SILENT);
-  this.quill.deleteText(range, lineFormats, _quill2.default.sources.USER);
-  this.quill.setSelection(range.index - 1, _quill2.default.sources.SILENT);
   // Earlier scroll.deleteAt might have messed up our selection,
   // so insertText's built in selection preservation is not reliable
   this.quill.focus();
