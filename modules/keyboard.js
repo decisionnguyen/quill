@@ -94,7 +94,7 @@ class Keyboard extends Module {
         prefix: prefixText,
         suffix: suffixText
       };
-      evt.preventDefault();
+      // evt.preventDefault();
       let prevented = bindings.some((binding) => {
         if (binding.collapsed != null && binding.collapsed !== curContext.collapsed) return false;
         if (binding.empty != null && binding.empty !== curContext.empty) return false;

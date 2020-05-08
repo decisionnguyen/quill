@@ -4688,7 +4688,7 @@ var Keyboard = function (_Module) {
           prefix: prefixText,
           suffix: suffixText
         };
-        evt.preventDefault();
+        // evt.preventDefault();
         var prevented = bindings.some(function (binding) {
           if (binding.collapsed != null && binding.collapsed !== curContext.collapsed) return false;
           if (binding.empty != null && binding.empty !== curContext.empty) return false;
