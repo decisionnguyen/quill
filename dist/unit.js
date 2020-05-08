@@ -4611,8 +4611,8 @@ var Keyboard = function (_Module) {
         _this.addBinding(_this.options.bindings[name]);
       }
     });
-    _this.addBinding({ key: Keyboard.keys.ENTER, shiftKey: null, ctrlKey: null, metaKey: null }, handleEnter);
-    // this.addBinding({ key: Keyboard.keys.ENTER, metaKey: null, ctrlKey: null, altKey: null }, function() {});
+    _this.addBinding({ key: Keyboard.keys.ENTER, shiftKey: null }, handleEnter);
+    _this.addBinding({ key: Keyboard.keys.ENTER, metaKey: null, ctrlKey: null, altKey: null }, function () {});
     if (/Firefox/i.test(navigator.userAgent)) {
       // Need to handle delete and backspace for Firefox in the general case #1171
       _this.addBinding({ key: Keyboard.keys.BACKSPACE }, { collapsed: true }, handleBackspace);
@@ -4688,7 +4688,6 @@ var Keyboard = function (_Module) {
           prefix: prefixText,
           suffix: suffixText
         };
-        // evt.preventDefault();
         var prevented = bindings.some(function (binding) {
           if (binding.collapsed != null && binding.collapsed !== curContext.collapsed) return false;
           if (binding.empty != null && binding.empty !== curContext.empty) return false;
@@ -4714,9 +4713,9 @@ var Keyboard = function (_Module) {
           if (binding.suffix != null && !binding.suffix.test(curContext.suffix)) return false;
           return binding.handler.call(_this2, range, curContext) !== true;
         });
-        // if (prevented) {
-        //   evt.preventDefault();
-        // }
+        if (prevented) {
+          evt.preventDefault();
+        }
       });
     }
   }]);
@@ -5025,9 +5024,9 @@ function handleEnter(range, context) {
     return lineFormats;
   }, {});
   this.quill.insertText(range.index, '\na', lineFormats, _quill2.default.sources.USER);
-  this.quill.setSelection(range.index + 2, _quill2.default.sources.SILENT);
   // Earlier scroll.deleteAt might have messed up our selection,
   // so insertText's built in selection preservation is not reliable
+  this.quill.setSelection(range.index + 2, _quill2.default.sources.SILENT);
   this.quill.focus();
   Object.keys(context.format).forEach(function (name) {
     if (lineFormats[name] != null) return;
@@ -5035,7 +5034,6 @@ function handleEnter(range, context) {
     if (name === 'link') return;
     _this3.quill.format(name, context.format[name], _quill2.default.sources.USER);
   });
-  return true;
 }
 
 function makeCodeBlockHandler(indent) {

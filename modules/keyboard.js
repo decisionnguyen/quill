@@ -37,8 +37,8 @@ class Keyboard extends Module {
         this.addBinding(this.options.bindings[name]);
       }
     });
-    this.addBinding({ key: Keyboard.keys.ENTER, shiftKey: null, ctrlKey: null, metaKey: null }, handleEnter);
-    // this.addBinding({ key: Keyboard.keys.ENTER, metaKey: null, ctrlKey: null, altKey: null }, function() {});
+    this.addBinding({ key: Keyboard.keys.ENTER, shiftKey: null }, handleEnter);
+    this.addBinding({ key: Keyboard.keys.ENTER, metaKey: null, ctrlKey: null, altKey: null }, function() {});
     if (/Firefox/i.test(navigator.userAgent)) {
       // Need to handle delete and backspace for Firefox in the general case #1171
       this.addBinding({ key: Keyboard.keys.BACKSPACE }, { collapsed: true }, handleBackspace);
@@ -50,8 +50,8 @@ class Keyboard extends Module {
     this.addBinding({ key: Keyboard.keys.BACKSPACE }, { collapsed: false }, handleDeleteRange);
     this.addBinding({ key: Keyboard.keys.DELETE }, { collapsed: false }, handleDeleteRange);
     this.addBinding({ key: Keyboard.keys.BACKSPACE, altKey: null, ctrlKey: null, metaKey: null, shiftKey: null },
-                    { collapsed: true, offset: 0 },
-                    handleBackspace);
+        { collapsed: true, offset: 0 },
+        handleBackspace);
     this.listen();
   }
 
@@ -94,7 +94,6 @@ class Keyboard extends Module {
         prefix: prefixText,
         suffix: suffixText
       };
-      // evt.preventDefault();
       let prevented = bindings.some((binding) => {
         if (binding.collapsed != null && binding.collapsed !== curContext.collapsed) return false;
         if (binding.empty != null && binding.empty !== curContext.empty) return false;
@@ -120,9 +119,9 @@ class Keyboard extends Module {
         if (binding.suffix != null && !binding.suffix.test(curContext.suffix)) return false;
         return binding.handler.call(this, range, curContext) !== true;
       });
-      // if (prevented) {
-      //   evt.preventDefault();
-      // }
+      if (prevented) {
+        evt.preventDefault();
+      }
     });
   }
 }
@@ -196,8 +195,8 @@ Keyboard.DEFAULTS = {
       handler: function(range) {
         this.quill.history.cutoff();
         let delta = new Delta().retain(range.index)
-                               .delete(range.length)
-                               .insert('\t');
+            .delete(range.length)
+            .insert('\t');
         this.quill.updateContents(delta, Quill.sources.USER);
         this.quill.history.cutoff();
         this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
@@ -223,9 +222,9 @@ Keyboard.DEFAULTS = {
         let [line, offset] = this.quill.getLine(range.index);
         let formats = extend({}, line.formats(), { list: 'checked' });
         let delta = new Delta().retain(range.index)
-                               .insert('\n', formats)
-                               .retain(line.length() - offset - 1)
-                               .retain(1, { list: 'unchecked' });
+            .insert('\n', formats)
+            .retain(line.length() - offset - 1)
+            .retain(1, { list: 'unchecked' });
         this.quill.updateContents(delta, Quill.sources.USER);
         this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
         this.quill.scrollIntoView();
@@ -239,9 +238,9 @@ Keyboard.DEFAULTS = {
       handler: function(range, context) {
         let [line, offset] = this.quill.getLine(range.index);
         let delta = new Delta().retain(range.index)
-                               .insert('\n', context.format)
-                               .retain(line.length() - offset - 1)
-                               .retain(1, { header: null });
+            .insert('\n', context.format)
+            .retain(line.length() - offset - 1)
+            .retain(1, { header: null });
         this.quill.updateContents(delta, Quill.sources.USER);
         this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
         this.quill.scrollIntoView();
@@ -273,9 +272,9 @@ Keyboard.DEFAULTS = {
         this.quill.insertText(range.index, ' ', Quill.sources.USER);
         this.quill.history.cutoff();
         let delta = new Delta().retain(range.index - offset)
-                               .delete(length + 1)
-                               .retain(line.length() - 2 - offset)
-                               .retain(1, { list: value });
+            .delete(length + 1)
+            .retain(line.length() - 2 - offset)
+            .retain(1, { list: value });
         this.quill.updateContents(delta, Quill.sources.USER);
         this.quill.history.cutoff();
         this.quill.setSelection(range.index - length, Quill.sources.SILENT);
@@ -290,9 +289,9 @@ Keyboard.DEFAULTS = {
       handler: function(range) {
         const [line, offset] = this.quill.getLine(range.index);
         const delta = new Delta()
-          .retain(range.index + line.length() - offset - 2)
-          .retain(1, { 'code-block': null })
-          .delete(1);
+            .retain(range.index + line.length() - offset - 2)
+            .retain(1, { 'code-block': null })
+            .delete(1);
         this.quill.updateContents(delta, Quill.sources.USER);
       }
     },
@@ -404,10 +403,10 @@ function handleEnter(range, context) {
     }
     return lineFormats;
   }, {});
-  this.quill.insertText(range.index, '\na', lineFormats, Quill.sources.USER);
-  this.quill.setSelection(range.index + 2, Quill.sources.SILENT);
+  this.quill.insertText(range.index, '\n', lineFormats, Quill.sources.USER);
   // Earlier scroll.deleteAt might have messed up our selection,
   // so insertText's built in selection preservation is not reliable
+  this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
   this.quill.focus();
   Object.keys(context.format).forEach((name) => {
     if (lineFormats[name] != null) return;
@@ -415,7 +414,6 @@ function handleEnter(range, context) {
     if (name === 'link') return;
     this.quill.format(name, context.format[name], Quill.sources.USER);
   });
-  return true
 }
 
 function makeCodeBlockHandler(indent) {
