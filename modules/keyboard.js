@@ -37,8 +37,8 @@ class Keyboard extends Module {
         this.addBinding(this.options.bindings[name]);
       }
     });
-    this.addBinding({ key: Keyboard.keys.ENTER, shiftKey: null, ctrlKey: null, metaKey: null }, handleEnter);
-    this.addBinding({ key: Keyboard.keys.ENTER, metaKey: null, ctrlKey: null, altKey: null }, function() {});
+    this.addBinding({ key: Keyboard.keys.ENTER }, handleEnter);
+    this.addBinding({ key: Keyboard.keys.ENTER, shiftKey: null, metaKey: null, ctrlKey: null, altKey: null }, function() {});
     if (/Firefox/i.test(navigator.userAgent)) {
       // Need to handle delete and backspace for Firefox in the general case #1171
       this.addBinding({ key: Keyboard.keys.BACKSPACE }, { collapsed: true }, handleBackspace);
@@ -404,8 +404,8 @@ function handleEnter(range, context) {
     }
     return lineFormats;
   }, {});
-  this.quill.insertText(range.index, '\n', lineFormats, Quill.sources.USER);
-  this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
+  // this.quill.insertText(range.index, '\n', lineFormats, Quill.sources.USER);
+  // this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
   // Earlier scroll.deleteAt might have messed up our selection,
   // so insertText's built in selection preservation is not reliable
   this.quill.focus();
