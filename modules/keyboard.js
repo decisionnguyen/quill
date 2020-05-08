@@ -73,7 +73,6 @@ class Keyboard extends Module {
 
   listen() {
     this.quill.root.addEventListener('keydown', (evt) => {
-      console.log(evt)
       if (evt.defaultPrevented) return;
       let which = evt.which || evt.keyCode;
       let bindings = (this.bindings[which] || []).filter(function(binding) {
@@ -95,6 +94,7 @@ class Keyboard extends Module {
         prefix: prefixText,
         suffix: suffixText
       };
+      evt.preventDefault();
       let prevented = bindings.some((binding) => {
         if (binding.collapsed != null && binding.collapsed !== curContext.collapsed) return false;
         if (binding.empty != null && binding.empty !== curContext.empty) return false;
@@ -120,9 +120,9 @@ class Keyboard extends Module {
         if (binding.suffix != null && !binding.suffix.test(curContext.suffix)) return false;
         return binding.handler.call(this, range, curContext) !== true;
       });
-      if (prevented) {
-        evt.preventDefault();
-      }
+      // if (prevented) {
+      //   evt.preventDefault();
+      // }
     });
   }
 }

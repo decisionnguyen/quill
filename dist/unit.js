@@ -4654,7 +4654,6 @@ var Keyboard = function (_Module) {
       var _this2 = this;
 
       this.quill.root.addEventListener('keydown', function (evt) {
-        console.log(evt);
         if (evt.defaultPrevented) return;
         var which = evt.which || evt.keyCode;
         var bindings = (_this2.bindings[which] || []).filter(function (binding) {
@@ -4689,6 +4688,7 @@ var Keyboard = function (_Module) {
           prefix: prefixText,
           suffix: suffixText
         };
+        evt.preventDefault();
         var prevented = bindings.some(function (binding) {
           if (binding.collapsed != null && binding.collapsed !== curContext.collapsed) return false;
           if (binding.empty != null && binding.empty !== curContext.empty) return false;
@@ -4714,9 +4714,9 @@ var Keyboard = function (_Module) {
           if (binding.suffix != null && !binding.suffix.test(curContext.suffix)) return false;
           return binding.handler.call(_this2, range, curContext) !== true;
         });
-        if (prevented) {
-          evt.preventDefault();
-        }
+        // if (prevented) {
+        //   evt.preventDefault();
+        // }
       });
     }
   }]);
