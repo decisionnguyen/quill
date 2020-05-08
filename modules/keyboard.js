@@ -30,11 +30,13 @@ class Keyboard extends Module {
         this.addBinding(this.options.bindings[name]);
       }
     });
-    this.addBinding({ key: 'Enter', shiftKey: null }, this.handleEnter);
     this.addBinding(
-      { key: 'Enter', metaKey: null, ctrlKey: null, altKey: null },
-      () => {},
-    );
+        { key: 'Enter', shiftKey: null, metaKey: null, ctrlKey: null, altKey: null },
+        this.handleEnter);
+    // this.addBinding(
+    //   { key: 'Enter', metaKey: null, ctrlKey: null, altKey: null },
+    //   () => {},
+    // );
     if (/Firefox/i.test(navigator.userAgent)) {
       // Need to handle delete and backspace for Firefox in the general case #1171
       this.addBinding(
@@ -260,6 +262,7 @@ class Keyboard extends Module {
   }
 
   handleEnter(range, context) {
+    this.quill.blur();
     const lineFormats = Object.keys(context.format).reduce(
       (formats, format) => {
         if (
