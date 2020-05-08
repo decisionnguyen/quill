@@ -4612,7 +4612,7 @@ var Keyboard = function (_Module) {
       }
     });
     _this.addBinding({ key: Keyboard.keys.ENTER }, handleEnter);
-    _this.addBinding({ key: Keyboard.keys.ENTER, shiftKey: null, metaKey: null, ctrlKey: null, altKey: null }, function () {});
+    // this.addBinding({ key: Keyboard.keys.ENTER, shiftKey: null, metaKey: null, ctrlKey: null, altKey: null }, function() {});
     if (/Firefox/i.test(navigator.userAgent)) {
       // Need to handle delete and backspace for Firefox in the general case #1171
       _this.addBinding({ key: Keyboard.keys.BACKSPACE }, { collapsed: true }, handleBackspace);
