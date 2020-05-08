@@ -4654,6 +4654,7 @@ var Keyboard = function (_Module) {
       var _this2 = this;
 
       this.quill.root.addEventListener('keydown', function (evt) {
+        console.log(evt);
         if (evt.defaultPrevented) return;
         var which = evt.which || evt.keyCode;
         var bindings = (_this2.bindings[which] || []).filter(function (binding) {

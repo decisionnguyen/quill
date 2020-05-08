@@ -73,6 +73,7 @@ class Keyboard extends Module {
 
   listen() {
     this.quill.root.addEventListener('keydown', (evt) => {
+      console.log(evt)
       if (evt.defaultPrevented) return;
       let which = evt.which || evt.keyCode;
       let bindings = (this.bindings[which] || []).filter(function(binding) {
