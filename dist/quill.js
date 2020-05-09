@@ -4557,7 +4557,7 @@ var _parchment2 = _interopRequireDefault(_parchment);
 
 var _quill = __webpack_require__(5);
 
-var _quill2 = _interopRequireDefault(_quill);
+var _quill3 = _interopRequireDefault(_quill);
 
 var _logger = __webpack_require__(10);
 
@@ -4746,7 +4746,7 @@ Keyboard.DEFAULTS = {
       format: ['blockquote', 'indent', 'list'],
       handler: function handler(range, context) {
         if (context.collapsed && context.offset !== 0) return true;
-        this.quill.format('indent', '+1', _quill2.default.sources.USER);
+        this.quill.format('indent', '+1', _quill3.default.sources.USER);
       }
     },
     'outdent': {
@@ -4756,7 +4756,7 @@ Keyboard.DEFAULTS = {
       // highlight tab or tab at beginning of list, indent or blockquote
       handler: function handler(range, context) {
         if (context.collapsed && context.offset !== 0) return true;
-        this.quill.format('indent', '-1', _quill2.default.sources.USER);
+        this.quill.format('indent', '-1', _quill3.default.sources.USER);
       }
     },
     'outdent backspace': {
@@ -4770,9 +4770,9 @@ Keyboard.DEFAULTS = {
       offset: 0,
       handler: function handler(range, context) {
         if (context.format.indent != null) {
-          this.quill.format('indent', '-1', _quill2.default.sources.USER);
+          this.quill.format('indent', '-1', _quill3.default.sources.USER);
         } else if (context.format.list != null) {
-          this.quill.format('list', false, _quill2.default.sources.USER);
+          this.quill.format('list', false, _quill3.default.sources.USER);
         }
       }
     },
@@ -4784,7 +4784,7 @@ Keyboard.DEFAULTS = {
       collapsed: true,
       prefix: /\t$/,
       handler: function handler(range) {
-        this.quill.deleteText(range.index - 1, 1, _quill2.default.sources.USER);
+        this.quill.deleteText(range.index - 1, 1, _quill3.default.sources.USER);
       }
     },
     'tab': {
@@ -4792,9 +4792,9 @@ Keyboard.DEFAULTS = {
       handler: function handler(range) {
         this.quill.history.cutoff();
         var delta = new _quillDelta2.default().retain(range.index).delete(range.length).insert('\t');
-        this.quill.updateContents(delta, _quill2.default.sources.USER);
+        this.quill.updateContents(delta, _quill3.default.sources.USER);
         this.quill.history.cutoff();
-        this.quill.setSelection(range.index + 1, _quill2.default.sources.SILENT);
+        this.quill.setSelection(range.index + 1, _quill3.default.sources.SILENT);
       }
     },
     'list empty enter': {
@@ -4803,9 +4803,9 @@ Keyboard.DEFAULTS = {
       format: ['list'],
       empty: true,
       handler: function handler(range, context) {
-        this.quill.format('list', false, _quill2.default.sources.USER);
+        this.quill.format('list', false, _quill3.default.sources.USER);
         if (context.format.indent) {
-          this.quill.format('indent', false, _quill2.default.sources.USER);
+          this.quill.format('indent', false, _quill3.default.sources.USER);
         }
       }
     },
@@ -4821,8 +4821,8 @@ Keyboard.DEFAULTS = {
 
         var formats = (0, _extend2.default)({}, line.formats(), { list: 'checked' });
         var delta = new _quillDelta2.default().retain(range.index).insert('\n', formats).retain(line.length() - offset - 1).retain(1, { list: 'unchecked' });
-        this.quill.updateContents(delta, _quill2.default.sources.USER);
-        this.quill.setSelection(range.index + 1, _quill2.default.sources.SILENT);
+        this.quill.updateContents(delta, _quill3.default.sources.USER);
+        this.quill.setSelection(range.index + 1, _quill3.default.sources.SILENT);
         this.quill.scrollIntoView();
       }
     },
@@ -4838,8 +4838,8 @@ Keyboard.DEFAULTS = {
             offset = _quill$getLine6[1];
 
         var delta = new _quillDelta2.default().retain(range.index).insert('\n', context.format).retain(line.length() - offset - 1).retain(1, { header: null });
-        this.quill.updateContents(delta, _quill2.default.sources.USER);
-        this.quill.setSelection(range.index + 1, _quill2.default.sources.SILENT);
+        this.quill.updateContents(delta, _quill3.default.sources.USER);
+        this.quill.setSelection(range.index + 1, _quill3.default.sources.SILENT);
         this.quill.scrollIntoView();
       }
     },
@@ -4871,12 +4871,12 @@ Keyboard.DEFAULTS = {
           default:
             value = 'ordered';
         }
-        this.quill.insertText(range.index, ' ', _quill2.default.sources.USER);
+        this.quill.insertText(range.index, ' ', _quill3.default.sources.USER);
         this.quill.history.cutoff();
         var delta = new _quillDelta2.default().retain(range.index - offset).delete(length + 1).retain(line.length() - 2 - offset).retain(1, { list: value });
-        this.quill.updateContents(delta, _quill2.default.sources.USER);
+        this.quill.updateContents(delta, _quill3.default.sources.USER);
         this.quill.history.cutoff();
-        this.quill.setSelection(range.index - length, _quill2.default.sources.SILENT);
+        this.quill.setSelection(range.index - length, _quill3.default.sources.SILENT);
       }
     },
     'code exit': {
@@ -4892,7 +4892,7 @@ Keyboard.DEFAULTS = {
             offset = _quill$getLine10[1];
 
         var delta = new _quillDelta2.default().retain(range.index + line.length() - offset - 2).retain(1, { 'code-block': null }).delete(1);
-        this.quill.updateContents(delta, _quill2.default.sources.USER);
+        this.quill.updateContents(delta, _quill3.default.sources.USER);
       }
     },
     'embed left': makeEmbedArrowHandler(Keyboard.keys.LEFT, false),
@@ -4923,15 +4923,15 @@ function makeEmbedArrowHandler(key, shiftKey) {
     if (!(leaf instanceof _parchment2.default.Embed)) return true;
     if (key === Keyboard.keys.LEFT) {
       if (shiftKey) {
-        this.quill.setSelection(range.index - 1, range.length + 1, _quill2.default.sources.USER);
+        this.quill.setSelection(range.index - 1, range.length + 1, _quill3.default.sources.USER);
       } else {
-        this.quill.setSelection(range.index - 1, _quill2.default.sources.USER);
+        this.quill.setSelection(range.index - 1, _quill3.default.sources.USER);
       }
     } else {
       if (shiftKey) {
-        this.quill.setSelection(range.index, range.length + 1, _quill2.default.sources.USER);
+        this.quill.setSelection(range.index, range.length + 1, _quill3.default.sources.USER);
       } else {
-        this.quill.setSelection(range.index + range.length + 1, _quill2.default.sources.USER);
+        this.quill.setSelection(range.index + range.length + 1, _quill3.default.sources.USER);
       }
     }
     return false;
@@ -4959,9 +4959,9 @@ function handleBackspace(range, context) {
   }
   // Check for astral symbols
   var length = /[\uD800-\uDBFF][\uDC00-\uDFFF]$/.test(context.prefix) ? 2 : 1;
-  this.quill.deleteText(range.index - length, length, _quill2.default.sources.USER);
+  this.quill.deleteText(range.index - length, length, _quill3.default.sources.USER);
   if (Object.keys(formats).length > 0) {
-    this.quill.formatLine(range.index - length, length, formats, _quill2.default.sources.USER);
+    this.quill.formatLine(range.index - length, length, formats, _quill3.default.sources.USER);
   }
   this.quill.focus();
 }
@@ -4989,9 +4989,9 @@ function handleDelete(range, context) {
       nextLength = next.length();
     }
   }
-  this.quill.deleteText(range.index, length, _quill2.default.sources.USER);
+  this.quill.deleteText(range.index, length, _quill3.default.sources.USER);
   if (Object.keys(formats).length > 0) {
-    this.quill.formatLine(range.index + nextLength - 1, length, formats, _quill2.default.sources.USER);
+    this.quill.formatLine(range.index + nextLength - 1, length, formats, _quill3.default.sources.USER);
   }
 }
 
@@ -5003,11 +5003,11 @@ function handleDeleteRange(range) {
     var lastFormats = lines[lines.length - 1].formats();
     formats = _op2.default.attributes.diff(lastFormats, firstFormats) || {};
   }
-  this.quill.deleteText(range, _quill2.default.sources.USER);
+  this.quill.deleteText(range, _quill3.default.sources.USER);
   if (Object.keys(formats).length > 0) {
-    this.quill.formatLine(range.index, 1, formats, _quill2.default.sources.USER);
+    this.quill.formatLine(range.index, 1, formats, _quill3.default.sources.USER);
   }
-  this.quill.setSelection(range.index, _quill2.default.sources.SILENT);
+  this.quill.setSelection(range.index, _quill3.default.sources.SILENT);
   this.quill.focus();
 }
 
@@ -5023,16 +5023,24 @@ function handleEnter(range, context) {
     }
     return lineFormats;
   }, {});
-  this.quill.insertText(range.index, '\na', lineFormats, _quill2.default.sources.USER);
-  // Earlier scroll.deleteAt might have messed up our selection,
-  // so insertText's built in selection preservation is not reliable
-  this.quill.setSelection(range.index + 2, _quill2.default.sources.SILENT);
+  if (!lineFormats['code-block']) {
+    this.quill.insertText(range.index, ' ', lineFormats, _quill2.default.sources.USER); // add new space
+    // this.quill.scroll.deleteAt(range.index + 1, 1)
+
+    this.quill.deleteText(range.index + 1, 1); //
+    this.quill.deleteAt(range.index + 1, 1);
+    this.quill.setSelection(range.index, _quill2.default.sources.SILENT);
+  } else {
+    this.quill.insertText(range.index, '\n', lineFormats, _quill2.default.sources.USER); // add new space
+    this.quill.setSelection(range.index + 1, _quill2.default.sources.SILENT);
+  }
+
   this.quill.focus();
   Object.keys(context.format).forEach(function (name) {
     if (lineFormats[name] != null) return;
     if (Array.isArray(context.format[name])) return;
     if (name === 'link') return;
-    _this3.quill.format(name, context.format[name], _quill2.default.sources.USER);
+    _this3.quill.format(name, context.format[name], _quill3.default.sources.USER);
   });
 }
 
@@ -5077,8 +5085,8 @@ function makeCodeBlockHandler(indent) {
         }
         offset += line.length + 1;
       });
-      this.quill.update(_quill2.default.sources.USER);
-      this.quill.setSelection(index, length, _quill2.default.sources.SILENT);
+      this.quill.update(_quill3.default.sources.USER);
+      this.quill.setSelection(index, length, _quill3.default.sources.SILENT);
     }
   };
 }
@@ -5088,7 +5096,7 @@ function makeFormatHandler(format) {
     key: format[0].toUpperCase(),
     shortKey: true,
     handler: function handler(range, context) {
-      this.quill.format(format, !context.format[format], _quill2.default.sources.USER);
+      this.quill.format(format, !context.format[format], _quill3.default.sources.USER);
     }
   };
 }
