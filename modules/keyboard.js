@@ -80,7 +80,8 @@ class Keyboard extends Module {
       });
       if (bindings.length === 0) return;
       let range = this.quill.getSelection();
-      if (range == null || !this.quill.hasFocus()) return;
+      this.quill.focus()
+      // if (range == null || !this.quill.hasFocus()) return;
       let [line, offset] = this.quill.getLine(range.index);
       let [leafStart, offsetStart] = this.quill.getLeaf(range.index);
       let [leafEnd, offsetEnd] = range.length === 0 ? [leafStart, offsetStart] : this.quill.getLeaf(range.index + range.length);
@@ -403,10 +404,29 @@ function handleEnter(range, context) {
     }
     return lineFormats;
   }, {});
-  this.quill.insertText(range.index, '\n', lineFormats, Quill.sources.USER);
-  // Earlier scroll.deleteAt might have messed up our selection,
-  // so insertText's built in selection preservation is not reliable
-  this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
+
+  this.quill.insertText(range.index, '\n', lineFormats, Quill.sources.USER); // add new space
+
+  //dinh pu edit
+  let lines = this.quill.getLines(range);
+
+  this.quill.selection.focus();
+  this.quill.focus();
+
+  let node = document.querySelector("#editor-container");
+  node.focus();
+
+  let _range = document.createRange();
+  _range.setStart(lines, 1);
+  _range.setEnd(lines, 1);
+  let sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(_range);
+  // end edit
+
+
+  this.quill.setSelection(range.index + 1, 0, Quill.sources.SILENT);
+
   this.quill.focus();
   Object.keys(context.format).forEach((name) => {
     if (lineFormats[name] != null) return;

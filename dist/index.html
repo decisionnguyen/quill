@@ -1,5 +1,5 @@
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link rel="stylesheet" href="quill.snow.css">
     <style>
         .ql-toolbar:after {
@@ -14,10 +14,13 @@
 <script src="./unit.js"></script>
 <script type="text/babel" src="./quill.core.js"></script>
 <script>
-    var quill = new Quill('#editor-container', {
+    document.addEventListener('keydown', function (e) {
+        console.log('e. ', e.keyCode)
+    });
+    var q = new Quill('#editor-container', {
         modules: {
             toolbar: [
-                [{ header: [1, 2, false] }],
+                [{header: [1, 2, false]}],
                 ['bold', 'italic', 'underline'],
                 ['image', 'code-block']
             ]
@@ -25,5 +28,7 @@
         placeholder: 'Compose an epic...',
         theme: 'snow'  // or 'bubble'
     });
+
+
 </script>
 </body>
